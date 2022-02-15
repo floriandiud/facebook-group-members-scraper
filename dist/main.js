@@ -40,8 +40,7 @@ window.members_list = window.members_list || [[
         'Image Src',
         'Groupe Id',
         'Group Joining Text',
-        'Profile Type',
-        'Is Verified'
+        'Profile Type'
     ]];
 // Add a Download button to export parsed member into a CSV file
 function buildCTABtn() {
@@ -130,7 +129,7 @@ function parseResponse(dataRaw) {
     var membersData = membersEdges.map(function (memberNode) {
         var _a, _b, _c, _d;
         // Member Data
-        var _e = memberNode.node, id = _e.id, name = _e.name, bio_text = _e.bio_text, url = _e.url, profile_picture = _e.profile_picture, profileType = _e.__isProfile, is_verified = _e.is_verified;
+        var _e = memberNode.node, id = _e.id, name = _e.name, bio_text = _e.bio_text, url = _e.url, profile_picture = _e.profile_picture, profileType = _e.__isProfile;
         // Group Joining Info
         var joiningText = ((_a = memberNode === null || memberNode === void 0 ? void 0 : memberNode.join_status_text) === null || _a === void 0 ? void 0 : _a.text) || ((_c = (_b = memberNode === null || memberNode === void 0 ? void 0 : memberNode.membership) === null || _b === void 0 ? void 0 : _b.join_status_text) === null || _c === void 0 ? void 0 : _c.text);
         // Facebook Group Id
@@ -143,8 +142,7 @@ function parseResponse(dataRaw) {
             (profile_picture === null || profile_picture === void 0 ? void 0 : profile_picture.uri) || '',
             groupId,
             joiningText || '',
-            profileType,
-            is_verified
+            profileType
         ];
     });
     (_a = window.members_list).push.apply(_a, membersData);
@@ -155,6 +153,7 @@ function parseResponse(dataRaw) {
     }
 }
 function main() {
+    buildCTABtn();
     var matchingUrl = '/api/graphql/';
     var send = XMLHttpRequest.prototype.send;
     XMLHttpRequest.prototype.send = function () {
@@ -165,6 +164,5 @@ function main() {
         }, false);
         send.apply(this, arguments);
     };
-    buildCTABtn();
 }
 main();

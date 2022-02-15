@@ -1,5 +1,5 @@
-function exportToCsv(filename: string, rows: string[][]): void {
-    var processRow = function (row) {
+function exportToCsv(filename: string, rows: any[][]): void {
+    var processRow = function (row: any[]) {
         var finalVal = '';
         for (var j = 0; j < row.length; j++) {
             var innerValue = ((row[j] === null) || (typeof(row[j]) === "undefined")) ? '' : row[j].toString();
