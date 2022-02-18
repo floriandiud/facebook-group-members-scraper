@@ -1,3 +1,4 @@
+// Utils to export a Javascript double array into a CSV file
 function exportToCsv(filename, rows) {
     var processRow = function (row) {
         var finalVal = '';
@@ -105,14 +106,15 @@ function parseResponse(dataRaw) {
     // Only look for Group GraphQL responses
     var data;
     if ((_b = dataGraphQL === null || dataGraphQL === void 0 ? void 0 : dataGraphQL.data) === null || _b === void 0 ? void 0 : _b.group) {
-        // Initial Group member page
+        // Initial Group members page
         data = dataGraphQL.data.group;
     }
     else if (((_d = (_c = dataGraphQL === null || dataGraphQL === void 0 ? void 0 : dataGraphQL.data) === null || _c === void 0 ? void 0 : _c.node) === null || _d === void 0 ? void 0 : _d.__typename) === 'Group') {
-        // New member load on scroll
+        // New members load on scroll
         data = dataGraphQL.data.node;
     }
     else {
+        // If no group members, return fast
         return;
     }
     var membersEdges;
@@ -154,6 +156,7 @@ function parseResponse(dataRaw) {
 }
 function main() {
     buildCTABtn();
+    // Watch API calls to find GraphQL responses to parse
     var matchingUrl = '/api/graphql/';
     var send = XMLHttpRequest.prototype.send;
     XMLHttpRequest.prototype.send = function () {

@@ -1,6 +1,6 @@
 # Facebook Group Members Scraper
 
-Script to scrape Facebook group members and export them in a CSV file.
+Script to scrape Facebook group members and export them into a CSV file.
 
 ## How to run the script
 
@@ -30,7 +30,7 @@ function exportToCsv(e,t){for(var n="",o=0;o<t.length;o++)n+=function(e){for(var
 - **Profile Type**: Facebook user category. Mostly "User".
 
 
-## Step by step with images
+## Step by step tutorial with screenshots
 
 **Open Chrome Developer Console**
 
@@ -38,17 +38,53 @@ To open the Chrome Developer console on Chrome, use the keyboard shortcut `Ctrl 
 
 ![Developer Tools](statics/open-developer-tools.png)
 
+
+
+
+
 **Copy Paste the script**
+
+Select the "Console" tab and copy-paste the script from above. Facebook shows a warning message in the "Console" asking not to  paste a script from a non trustworthy source. It's true! And if you don't trust this script, stop here. [Read the source code](main.ts) to understand what this script does.
 
 ![Paste the script](statics/copy-paster-script.png)
 
+
+
+
+
 **Click on the "Members" tab and scroll to load new members**
+
+In the Group Page, go to "Members" and scroll to the bottom of the page. If the counter in the button text increases as your scroll, it's working!
 
 ![Scroll](statics/facebook-group-members-download.png)
 
+
+
 **Download members in CSV format**
 
+Once finished, or to perform "export checkpoints", click the button. A Download window will prompt asking where to save your CSV file.
+
 ![Download CSV](statics/export-members-to-csv.png)
+
+
+
+
+
+**Edit and view your CSV file**
+
+[To load and view the CSV file](https://www.datablist.com/csv-editor), you can use [Datablist.com](https://www.datablist.com/) or any spreadsheet tools.
+
+
+
+
+## FAQ
+
+- **How to remove the "Download" button?**
+    - Just reload your Facebook page. Any javascript code added in Chrome Developer Console will be removed.
+- **How many members can be extracted for one group?**
+    - Facebook loads a maximum of 10k profiles in the "Members" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your members in a single list using Datablist.com](https://www.datablist.com).
+- **Can I extract members from different groups in one time?**
+    - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 
 
 
@@ -58,3 +94,7 @@ To open the Chrome Developer console on Chrome, use the keyboard shortcut `Ctrl 
 yarn install
 yarn build
 ```
+
+
+
+Generated script is located in `dist/main.min.js`.

@@ -1,3 +1,4 @@
+// Utils to export a Javascript double array into a CSV file
 function exportToCsv(filename: string, rows: any[][]): void {
     var processRow = function (row: any[]) {
         var finalVal = '';
@@ -116,12 +117,13 @@ function parseResponse(dataRaw: string): void{
     // Only look for Group GraphQL responses
     let data: any;
     if(dataGraphQL?.data?.group){
-        // Initial Group member page
+        // Initial Group members page
         data = dataGraphQL.data.group;
     } else if(dataGraphQL?.data?.node?.__typename === 'Group'){
-        // New member load on scroll
+        // New members load on scroll
         data = dataGraphQL.data.node;
     } else {
+        // If no group members, return fast
         return;
     }
 
@@ -173,9 +175,10 @@ function parseResponse(dataRaw: string): void{
     }
 }
 
-function main(): void{
+function main(): void {
     buildCTABtn()
 
+    // Watch API calls to find GraphQL responses to parse
     const matchingUrl = '/api/graphql/';
     let send = XMLHttpRequest.prototype.send;
     XMLHttpRequest.prototype.send = function() {
