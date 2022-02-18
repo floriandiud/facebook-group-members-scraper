@@ -1,13 +1,13 @@
 # Facebook Group Members Scraper
 
-Script to scrape Facebook group members and export them into a CSV file.
+Script to scrape Facebook group members and export them into a CSV file. Works in the browser, without installing an extension or using a proxy. Just copy paste the script in your Chrome console.
 
 ## How to run the script
 
  1. Go to a Facebook group page
  1. Open Chrome Developer Console
  1. Copy Paste the following code into the console. It will add a "Download 0 members" button
- 1. Click on the "Members" tab of the group page
+ 1. Click on the "People" tab of the group page
  1. Scroll to load new members that will get catch by the script and update the button count
  1. Once done, click on the "Download X members" button to download the generated CSV file
 
@@ -52,17 +52,17 @@ Select the "Console" tab and copy-paste the script from above. Facebook shows a 
 
 
 
-**Click on the "Members" tab and scroll to load new members**
+**Click on the "People" tab and scroll to load new members**
 
-In the Group Page, go to "Members" and scroll to the bottom of the page. If the counter in the button text increases as your scroll, it's working!
+In the Group Page, go to "People" and scroll to the bottom of the page. If the counter in the button text increases as your scroll, it's working!
 
 ![Scroll](statics/facebook-group-members-download.png)
 
 
 
-**Download members in CSV format**
+**Export members in CSV format**
 
-Once finished, or to perform "export checkpoints", click the button. A Download window will prompt asking where to save your CSV file.
+Once finished, or to perform "export checkpoints", click the button "Download X members". A Download window will prompt asking where to save your CSV file.
 
 ![Download CSV](statics/export-members-to-csv.png)
 
@@ -82,7 +82,7 @@ Once finished, or to perform "export checkpoints", click the button. A Download 
 - **How to remove the "Download" button?**
     - Just reload your Facebook page. Any javascript code added in Chrome Developer Console will be removed.
 - **How many members can be extracted for one group?**
-    - Facebook loads a maximum of 10k profiles in the "Members" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your members in a single list using Datablist.com](https://www.datablist.com).
+    - Facebook loads a maximum of 10k profiles in the "People" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your members in a single list using Datablist.com](https://www.datablist.com).
 - **Can I extract members from different groups in one time?**
     - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 
