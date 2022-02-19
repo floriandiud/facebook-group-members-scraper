@@ -1,14 +1,14 @@
 # Facebook Group Members Scraper
 
-Script to scrape Facebook group members and export them into a CSV file. Works in the browser, without installing an extension or using a proxy. Just copy paste the script in your Chrome console.
+Script to scrape Facebook group members and export them into a CSV file. This Facebook Group members extractor works in the browser, without installing an extension or using a proxy. Just copy-paste the script into your Chrome console.
 
-## How to run the script
+## How to run the Facebook Group Extractor script
 
  1. Go to a Facebook group page
  1. Open Chrome Developer Console
  1. Copy Paste the following code into the console. It will add a "Download 0 members" button
  1. Click on the "People" tab of the group page
- 1. Scroll to load new members that will get catch by the script and update the button count
+ 1. Scroll to load new members that will get caught by the script. The button counter increases with new members scraped.
  1. Once done, click on the "Download X members" button to download the generated CSV file
 
 > [dist/main.min.js](dist/main.min.js)
@@ -20,17 +20,17 @@ function exportToCsv(e,t){for(var n="",o=0;o<t.length;o++)n+=function(e){for(var
 
 ## Exported Fields
 
-- **Profile Id**: Unique facebook identifier. Multi digits number.
-- **Full Name**: First name and last name concatenated
-- **Profile Link**: Profile URI in the format https://www.facebook.com/{{username}}. When not available, will be https://www.facebook.com/profile.php?id={{profile_id}}
-- **Bio**
+- **Profile Id**: Unique facebook identifier. Multi-digit number.
+- **Full Name**: First name and last name concatenated.
+- **Profile Link**: Profile URI in the format https://www.facebook.com/{{username}}. When not available, default to https://www.facebook.com/profile.php?id={{profile_id}}
+- **Bio**: Profile bio text.
 - **Image Src**: Profile picture URI.
-- **Group Id**: Facebook group identifier. Multi digits number.
-- **Group Joining Text**: Relative time since user join the group. In the format: "Member since XX".
+- **Group Id**: Facebook group identifier. Multi-digit number.
+- **Group Joining Text**: Relative time since user joined the group. In the format: "Member since XX".
 - **Profile Type**: Facebook user category. Mostly "User".
 
 
-## Step by step tutorial with screenshots
+## Group Members Extractor tutorial with screenshots
 
 **Open Chrome Developer Console**
 
@@ -44,7 +44,7 @@ To open the Chrome Developer console on Chrome, use the keyboard shortcut `Ctrl 
 
 **Copy Paste the script**
 
-Select the "Console" tab and copy-paste the script from above. Facebook shows a warning message in the "Console" asking not to  paste a script from a non trustworthy source. It's true! And if you don't trust this script, stop here. [Read the source code](main.ts) to understand what this script does.
+Select the "Console" tab and copy-paste the script from above. Facebook shows a warning message in the "Console" asking not to  paste a script from a non-trustworthy source. It's true! And if you don't trust this script, stop here. [Read the source code](main.ts) to understand what this script does.
 
 ![Paste the script](statics/copy-paster-script.png)
 
@@ -72,7 +72,7 @@ Once finished, or to perform "export checkpoints", click the button "Download X 
 
 **Edit and view your CSV file**
 
-[To load and view the CSV file](https://www.datablist.com/csv-editor), you can use [Datablist.com](https://www.datablist.com/) or any spreadsheet tools.
+[To load and view the CSV file](https://www.datablist.com/csv-editor), use [Datablist.com](https://www.datablist.com/) or any spreadsheet tools.
 
 
 
@@ -83,8 +83,8 @@ Once finished, or to perform "export checkpoints", click the button "Download X 
     - Just reload your Facebook page. Any javascript code added in Chrome Developer Console will be removed.
 - **How many members can be extracted for one group?**
     - Facebook loads a maximum of 10k profiles in the "People" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your members in a single list using Datablist.com](https://www.datablist.com).
-- **Can I extract members from different groups in one time?**
-    - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
+- **Can I extract members from different groups at one time?**
+    - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members, and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 
 
 
@@ -97,4 +97,4 @@ yarn build
 
 
 
-Generated script is located in `dist/main.min.js`.
+The generated script is located in `dist/main.min.js`.
