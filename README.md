@@ -11,6 +11,8 @@ Script to scrape Facebook group members and export them into a CSV file. This Fa
  1. Scroll to load new members that will get caught by the script. The button counter increases with new members scraped.
  1. Once done, click on the "Download X members" button to download the generated CSV file
 
+ Read our step-by-step [guide to extract Facebook group members and find their LinkedIn profile](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin)
+
 > [dist/main.min.js](dist/main.min.js)
 
 ```javascript
@@ -27,7 +29,7 @@ function exportToCsv(e,t){for(var n="",o=0;o<t.length;o++)n+=function(e){for(var
 - **Image Src**: Profile picture URI.
 - **Group Id**: Facebook group identifier. Multi-digit number.
 - **Group Joining Text**: Relative time since user joined the group. In the format: "Member since XX".
-- **Profile Type**: Facebook user category. Mostly "User".
+- **Profile Type**: Facebook profile type. "User" or "Page".
 
 
 ## Group Members Extractor tutorial with screenshots
@@ -75,6 +77,10 @@ Once finished, or to perform "export checkpoints", click the button "Download X 
 [To load and view the CSV file](https://www.datablist.com/csv-editor), use [Datablist.com](https://www.datablist.com/) or any spreadsheet tools.
 
 
+**Manage your Facebook leads and enrich them with LinkedIn Profile**
+
+Use Facebook members profiles to build a leads database. Filter and segment leads to find the most relevant leads to contact. Then, enrich Facebook members with LinkedIn profile and email address.
+Follow this step-by-step tutorial to [scrape Facebook members and find their LinkedIn profiles](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin)
 
 
 ## FAQ
@@ -82,7 +88,7 @@ Once finished, or to perform "export checkpoints", click the button "Download X 
 - **How to remove the "Download" button?**
     - Just reload your Facebook page. Any javascript code added in Chrome Developer Console will be removed.
 - **How many members can be extracted for one group?**
-    - Facebook loads a maximum of 10k profiles in the "People" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your members in a single list using Datablist.com](https://www.datablist.com).
+    - Facebook loads a maximum of 10k profiles in the "People" tab. We recommend extracting new members on a regular basis. And then, [consolidate all your Facebook profiles in a single list using Datablist.com](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin).
 - **Can I extract members from different groups at one time?**
     - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members, and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 
