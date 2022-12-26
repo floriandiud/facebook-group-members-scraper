@@ -92,17 +92,9 @@ function buildCTABtn() {
     document.body.appendChild(canvas);
     return canvas;
 }
-function parseResponse(dataRaw) {
+function processResponse(dataGraphQL) {
     var _a;
     var _b, _c, _d, _e, _f;
-    var dataGraphQL;
-    try {
-        dataGraphQL = JSON.parse(dataRaw);
-    }
-    catch (err) {
-        console.error('Fail to parse API response', err);
-        return;
-    }
     // Only look for Group GraphQL responses
     var data;
     if ((_b = dataGraphQL === null || dataGraphQL === void 0 ? void 0 : dataGraphQL.data) === null || _b === void 0 ? void 0 : _b.group) {
@@ -152,6 +144,34 @@ function parseResponse(dataRaw) {
     var tracker = document.getElementById('fb-group-scraper-number-tracker');
     if (tracker) {
         tracker.textContent = window.members_list.length.toString();
+    }
+}
+function parseResponse(dataRaw) {
+    var dataGraphQL = [];
+    try {
+        dataGraphQL.push(JSON.parse(dataRaw));
+    }
+    catch (err) {
+        // Sometime Facebook return multiline response
+        var splittedData = dataRaw.split("\n");
+        // If not a multiline response
+        if (splittedData.length <= 1) {
+            console.error('Fail to parse API response', err);
+            return;
+        }
+        // Multiline response. Parse each response
+        for (var i = 0; i < splittedData.length; i++) {
+            var newDataRaw = splittedData[i];
+            try {
+                dataGraphQL.push(JSON.parse(newDataRaw));
+            }
+            catch (err2) {
+                console.error('Fail to parse API response', err);
+            }
+        }
+    }
+    for (var j = 0; j < dataGraphQL.length; j++) {
+        processResponse(dataGraphQL[j]);
     }
 }
 function main() {

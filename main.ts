@@ -104,16 +104,7 @@ function buildCTABtn(): HTMLElement{
     return canvas;
 }
 
-
-function parseResponse(dataRaw: string): void{
-    let dataGraphQL: any;
-    try{
-        dataGraphQL = JSON.parse(dataRaw)
-    }catch(err){
-        console.error('Fail to parse API response', err)
-        return;
-    }
-
+function processResponse(dataGraphQL: any){
     // Only look for Group GraphQL responses
     let data: any;
     if(dataGraphQL?.data?.group){
@@ -172,6 +163,37 @@ function parseResponse(dataRaw: string): void{
     const tracker = document.getElementById('fb-group-scraper-number-tracker')
     if(tracker){
         tracker.textContent = window.members_list.length.toString()
+    }
+}
+
+
+function parseResponse(dataRaw: string): void{
+    let dataGraphQL: Array<any> = [];
+    try{
+        dataGraphQL.push(JSON.parse(dataRaw))
+    }catch(err){
+        // Sometime Facebook return multiline response
+        const splittedData = dataRaw.split("\n");
+
+        // If not a multiline response
+        if(splittedData.length<=1){
+            console.error('Fail to parse API response', err);
+            return;
+        }
+
+        // Multiline response. Parse each response
+        for(let i=0; i<splittedData.length;i++){
+            const newDataRaw = splittedData[i];
+            try{
+                dataGraphQL.push(JSON.parse(newDataRaw));
+            }catch(err2){
+                console.error('Fail to parse API response', err);
+            }
+        }
+    }
+
+    for(let j=0; j<dataGraphQL.length; j++){
+        processResponse(dataGraphQL[j])
     }
 }
 
