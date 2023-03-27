@@ -104,7 +104,7 @@ function buildCTABtn(): HTMLElement{
     return canvas;
 }
 
-function processResponse(dataGraphQL: any){
+function processResponse(dataGraphQL: any): void{
     // Only look for Group GraphQL responses
     let data: any;
     if(dataGraphQL?.data?.group){
@@ -124,6 +124,8 @@ function processResponse(dataGraphQL: any){
         membersEdges = data.new_members.edges;
     }else if(data?.new_forum_members?.edges){
         membersEdges = data.new_forum_members.edges;
+    }else if(data?.search_results?.edges){
+        membersEdges = data.search_results.edges;
     }else{
         return
     }

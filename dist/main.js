@@ -94,7 +94,7 @@ function buildCTABtn() {
 }
 function processResponse(dataGraphQL) {
     var _a;
-    var _b, _c, _d, _e, _f;
+    var _b, _c, _d, _e, _f, _g;
     // Only look for Group GraphQL responses
     var data;
     if ((_b = dataGraphQL === null || dataGraphQL === void 0 ? void 0 : dataGraphQL.data) === null || _b === void 0 ? void 0 : _b.group) {
@@ -116,6 +116,9 @@ function processResponse(dataGraphQL) {
     }
     else if ((_f = data === null || data === void 0 ? void 0 : data.new_forum_members) === null || _f === void 0 ? void 0 : _f.edges) {
         membersEdges = data.new_forum_members.edges;
+    }
+    else if ((_g = data === null || data === void 0 ? void 0 : data.search_results) === null || _g === void 0 ? void 0 : _g.edges) {
+        membersEdges = data.search_results.edges;
     }
     else {
         return;
