@@ -25,7 +25,6 @@ class FBStorage extends ListStorage<FBMember> {
         ]
     }
     itemToRow(item: FBMember): string[]{
-        // To Implement
         return [
             item.profileId,
             item.fullName,
@@ -36,14 +35,6 @@ class FBStorage extends ListStorage<FBMember> {
             item.groupJoiningText,
             item.profileType
         ]
-    }
-}
-
-
-
-declare global {
-    interface Window {
-        members_list: any
     }
 }
 
