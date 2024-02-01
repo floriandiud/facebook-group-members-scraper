@@ -49,7 +49,7 @@ To open the Chrome Developer console on Chrome, use the keyboard shortcut `Ctrl 
 
 **Copy Paste the script**
 
-Select the "Console" tab and copy-paste the script from above. Facebook shows a warning message in the "Console" asking not to  paste a script from a non-trustworthy source. It's true! And if you don't trust this script, stop here. [Read the source code](main.ts) to understand what this script does.
+Select the "Console" tab and copy-paste the script from above. Facebook shows a warning message in the "Console" asking not to  paste a script from a non-trustworthy source. It's true! And if you don't trust this script, stop here. [Read the source code](src/main.ts) to understand what this script does.
 
 ![Paste the script](statics/copy-paster-script.png)
 
