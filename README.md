@@ -6,11 +6,11 @@ Script to scrape Facebook group members and export them into a CSV file. This Fa
 
  1. Go to a Facebook group page
  1. Open Chrome Developer Console
- 1. Copy Paste the following code into the console. It will add a "Download 0 members" button
+ 1. Copy Paste the following code into the console. It will add a "Download 0 members" button. **Important: Copy/Paste before moving to the "People/Members" tab**
  1. Click on the "People" tab of the group page
- 1. Scroll to load new members that will get caught by the script. The button counter increases with new members scraped.
+ 1. Scroll to load new members that will get scraped by the script. The button counter increases with new members scraped.
  1. Once done, click on the "Download X members" button to download the generated CSV file
- 1. The profiles are kept in a cache until you click the "Reset" button. Thanks to this cache, the extracted profiles are still available if your browser "crash"
+ 1. The profiles are kept in a cache until you click the "Reset" button. Thanks to this cache, the extracted profiles are still available if your browser "crashes"
 
  Read our step-by-step [guide to extract Facebook group members and find their LinkedIn profile](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin)
 
@@ -23,7 +23,7 @@ var X=Object.defineProperty,Y=(e,t,n)=>t in e?X(e,t,{enumerable:!0,configurable:
 ```
 
 
-## Exported Fields
+## Scrapped Fields
 
 - **Profile Id**: Unique facebook identifier. Multi-digit number.
 - **Full Name**: First name and last name concatenated.
@@ -83,7 +83,12 @@ Once finished, or to perform "export checkpoints", click the button "Download X 
 **Manage your Facebook leads and enrich them with LinkedIn Profile**
 
 Use Facebook members profiles to build a leads database. Filter and segment leads to find the most relevant leads to contact. Then, enrich Facebook members with LinkedIn profile and email address.
-Follow this step-by-step tutorial to [scrape Facebook members and find their LinkedIn profiles](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin)
+Follow this step-by-step tutorial to [scrape Facebook members and find their LinkedIn profiles](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin).
+
+**Find the email address for Facebook Group members**
+
+To be clear: **there is no direct way to get the email address from Facebook.**
+But we can use the name, the company name, or the LinkedIn Profile URL to find an email address! Read our [guide to scrape Facebook Group Members and find their email address](https://www.datablist.com/how-to/scrape-facebook-group-members-linkedin#step-4-find-email-addresses-for-facebook-group-members).
 
 
 ## FAQ
@@ -96,7 +101,8 @@ Follow this step-by-step tutorial to [scrape Facebook members and find their Lin
     - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members, and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 - **What is the "Reset" button?**
     - The profiles are stored in a cache in your browser. The cache is kept if your browser restart the page (intentionally or after a crash). When you copy/paste the script, it loads the previous profiles from the cache. The "Reset" button clear the cache.
-
+- **Is it free?**
+    - The script is free and open-source. You can also clean and parse the data to get only members with a Company name with a free account on [Datablist](https://www.datablist.com). To perform a [LinkedIn Profile lookup](https://www.datablist.com/enrichments/linkedin-finder-from-name) or to [find an email address](https://www.datablist.com/enrichments/email-finder) you have to subscribe to a paid account on [Datablist](https://www.datablist.com). Those enrichments rely on external APIs. 
 
 ## How to build it locally
 
