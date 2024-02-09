@@ -1,6 +1,6 @@
 var X = Object.defineProperty;
 var Y = (t, e, n) => e in t ? X(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
-var k = (t, e, n) => (Y(t, typeof e != "symbol" ? e + "" : e, n), n);
+var A = (t, e, n) => (Y(t, typeof e != "symbol" ? e + "" : e, n), n);
 function Z(t, e) {
   for (var n = function(a) {
     for (var u = "", d = 0; d < a.length; d++) {
@@ -11,15 +11,15 @@ function Z(t, e) {
     }
     return u + `
 `;
-  }, r = "", i = 0; i < e.length; i++)
-    r += n(e[i]);
-  var s = new Blob([r], { type: "text/csv;charset=utf-8;" }), o = document.createElement("a");
+  }, r = "", s = 0; s < e.length; s++)
+    r += n(e[s]);
+  var i = new Blob([r], { type: "text/csv;charset=utf-8;" }), o = document.createElement("a");
   if (o.download !== void 0) {
-    var l = URL.createObjectURL(s);
+    var l = URL.createObjectURL(i);
     o.setAttribute("href", l), o.setAttribute("download", t), document.body.appendChild(o), o.click(), document.body.removeChild(o);
   }
 }
-const E = (t, e) => e.some((n) => t instanceof n);
+const I = (t, e) => e.some((n) => t instanceof n);
 let M, j;
 function N() {
   return M || (M = [
@@ -37,32 +37,32 @@ function G() {
     IDBCursor.prototype.continuePrimaryKey
   ]);
 }
-const _ = /* @__PURE__ */ new WeakMap(), x = /* @__PURE__ */ new WeakMap(), m = /* @__PURE__ */ new WeakMap();
+const _ = /* @__PURE__ */ new WeakMap(), x = /* @__PURE__ */ new WeakMap(), b = /* @__PURE__ */ new WeakMap();
 function Q(t) {
   const e = new Promise((n, r) => {
-    const i = () => {
-      t.removeEventListener("success", s), t.removeEventListener("error", o);
-    }, s = () => {
-      n(h(t.result)), i();
+    const s = () => {
+      t.removeEventListener("success", i), t.removeEventListener("error", o);
+    }, i = () => {
+      n(h(t.result)), s();
     }, o = () => {
-      r(t.error), i();
+      r(t.error), s();
     };
-    t.addEventListener("success", s), t.addEventListener("error", o);
+    t.addEventListener("success", i), t.addEventListener("error", o);
   });
-  return m.set(e, t), e;
+  return b.set(e, t), e;
 }
 function ee(t) {
   if (_.has(t))
     return;
   const e = new Promise((n, r) => {
-    const i = () => {
-      t.removeEventListener("complete", s), t.removeEventListener("error", o), t.removeEventListener("abort", o);
-    }, s = () => {
-      n(), i();
+    const s = () => {
+      t.removeEventListener("complete", i), t.removeEventListener("error", o), t.removeEventListener("abort", o);
+    }, i = () => {
+      n(), s();
     }, o = () => {
-      r(t.error || new DOMException("AbortError", "AbortError")), i();
+      r(t.error || new DOMException("AbortError", "AbortError")), s();
     };
-    t.addEventListener("complete", s), t.addEventListener("error", o), t.addEventListener("abort", o);
+    t.addEventListener("complete", i), t.addEventListener("error", o), t.addEventListener("abort", o);
   });
   _.set(t, e);
 }
@@ -88,13 +88,13 @@ function K(t) {
 }
 function te(t) {
   return G().includes(t) ? function(...e) {
-    return t.apply(C(this), e), h(this.request);
+    return t.apply(S(this), e), h(this.request);
   } : function(...e) {
-    return h(t.apply(C(this), e));
+    return h(t.apply(S(this), e));
   };
 }
 function ne(t) {
-  return typeof t == "function" ? te(t) : (t instanceof IDBTransaction && ee(t), E(t, N()) ? new Proxy(t, D) : t);
+  return typeof t == "function" ? te(t) : (t instanceof IDBTransaction && ee(t), I(t, N()) ? new Proxy(t, D) : t);
 }
 function h(t) {
   if (t instanceof IDBRequest)
@@ -102,10 +102,10 @@ function h(t) {
   if (x.has(t))
     return x.get(t);
   const e = ne(t);
-  return e !== t && (x.set(t, e), m.set(e, t)), e;
+  return e !== t && (x.set(t, e), b.set(e, t)), e;
 }
-const C = (t) => m.get(t);
-function re(t, e, { blocked: n, upgrade: r, blocking: i, terminated: s } = {}) {
+const S = (t) => b.get(t);
+function re(t, e, { blocked: n, upgrade: r, blocking: s, terminated: i } = {}) {
   const o = indexedDB.open(t, e), l = h(o);
   return r && o.addEventListener("upgradeneeded", (a) => {
     r(h(o.result), a.oldVersion, a.newVersion, h(o.transaction), a);
@@ -115,44 +115,44 @@ function re(t, e, { blocked: n, upgrade: r, blocking: i, terminated: s } = {}) {
     a.newVersion,
     a
   )), l.then((a) => {
-    s && a.addEventListener("close", () => s()), i && a.addEventListener("versionchange", (u) => i(u.oldVersion, u.newVersion, u));
+    i && a.addEventListener("close", () => i()), s && a.addEventListener("versionchange", (u) => s(u.oldVersion, u.newVersion, u));
   }).catch(() => {
   }), l;
 }
-const ie = ["get", "getKey", "getAll", "getAllKeys", "count"], se = ["put", "add", "delete", "clear"], I = /* @__PURE__ */ new Map();
+const se = ["get", "getKey", "getAll", "getAllKeys", "count"], ie = ["put", "add", "delete", "clear"], E = /* @__PURE__ */ new Map();
 function L(t, e) {
   if (!(t instanceof IDBDatabase && !(e in t) && typeof e == "string"))
     return;
-  if (I.get(e))
-    return I.get(e);
-  const n = e.replace(/FromIndex$/, ""), r = e !== n, i = se.includes(n);
+  if (E.get(e))
+    return E.get(e);
+  const n = e.replace(/FromIndex$/, ""), r = e !== n, s = ie.includes(n);
   if (
     // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
-    !(n in (r ? IDBIndex : IDBObjectStore).prototype) || !(i || ie.includes(n))
+    !(n in (r ? IDBIndex : IDBObjectStore).prototype) || !(s || se.includes(n))
   )
     return;
-  const s = async function(o, ...l) {
-    const a = this.transaction(o, i ? "readwrite" : "readonly");
+  const i = async function(o, ...l) {
+    const a = this.transaction(o, s ? "readwrite" : "readonly");
     let u = a.store;
     return r && (u = u.index(l.shift())), (await Promise.all([
       u[n](...l),
-      i && a.done
+      s && a.done
     ]))[0];
   };
-  return I.set(e, s), s;
+  return E.set(e, i), i;
 }
 K((t) => ({
   ...t,
   get: (e, n, r) => L(e, n) || t.get(e, n, r),
   has: (e, n) => !!L(e, n) || t.has(e, n)
 }));
-const oe = ["continue", "continuePrimaryKey", "advance"], R = {}, S = /* @__PURE__ */ new WeakMap(), W = /* @__PURE__ */ new WeakMap(), ae = {
+const oe = ["continue", "continuePrimaryKey", "advance"], R = {}, C = /* @__PURE__ */ new WeakMap(), W = /* @__PURE__ */ new WeakMap(), ae = {
   get(t, e) {
     if (!oe.includes(e))
       return t[e];
     let n = R[e];
     return n || (n = R[e] = function(...r) {
-      S.set(this, W.get(this)[e](...r));
+      C.set(this, W.get(this)[e](...r));
     }), n;
   }
 };
@@ -162,11 +162,11 @@ async function* ce(...t) {
     return;
   e = e;
   const n = new Proxy(e, ae);
-  for (W.set(n, e), m.set(n, C(e)); e; )
-    yield n, e = await (S.get(n) || e.continue()), S.delete(n);
+  for (W.set(n, e), b.set(n, S(e)); e; )
+    yield n, e = await (C.get(n) || e.continue()), C.delete(n);
 }
 function V(t, e) {
-  return e === Symbol.asyncIterator && E(t, [IDBIndex, IDBObjectStore, IDBCursor]) || e === "iterate" && E(t, [IDBIndex, IDBObjectStore]);
+  return e === Symbol.asyncIterator && I(t, [IDBIndex, IDBObjectStore, IDBCursor]) || e === "iterate" && I(t, [IDBIndex, IDBObjectStore]);
 }
 K((t) => ({
   ...t,
@@ -178,12 +178,12 @@ K((t) => ({
   }
 }));
 var f = function(t, e, n, r) {
-  function i(s) {
-    return s instanceof n ? s : new n(function(o) {
-      o(s);
+  function s(i) {
+    return i instanceof n ? i : new n(function(o) {
+      o(i);
     });
   }
-  return new (n || (n = Promise))(function(s, o) {
+  return new (n || (n = Promise))(function(i, o) {
     function l(d) {
       try {
         u(r.next(d));
@@ -199,7 +199,7 @@ var f = function(t, e, n, r) {
       }
     }
     function u(d) {
-      d.done ? s(d.value) : i(d.value).then(l, a);
+      d.done ? i(d.value) : s(d.value).then(l, a);
     }
     u((r = r.apply(t, e || [])).next());
   });
@@ -208,8 +208,8 @@ var f = function(t, e, n, r) {
   for (var r in t)
     Object.prototype.hasOwnProperty.call(t, r) && e.indexOf(r) < 0 && (n[r] = t[r]);
   if (t != null && typeof Object.getOwnPropertySymbols == "function")
-    for (var i = 0, r = Object.getOwnPropertySymbols(t); i < r.length; i++)
-      e.indexOf(r[i]) < 0 && Object.prototype.propertyIsEnumerable.call(t, r[i]) && (n[r[i]] = t[r[i]]);
+    for (var s = 0, r = Object.getOwnPropertySymbols(t); s < r.length; s++)
+      e.indexOf(r[s]) < 0 && Object.prototype.propertyIsEnumerable.call(t, r[s]) && (n[r[s]] = t[r[s]]);
   return n;
 };
 class ue {
@@ -225,50 +225,74 @@ class ue {
   initDB() {
     return f(this, void 0, void 0, function* () {
       this.db = yield re(this.storageKey, 5, {
-        upgrade(e, n, r, i) {
-          let s;
-          n < 5 && e.deleteObjectStore("data"), e.objectStoreNames.contains("data") ? s = i.objectStore("data") : s = e.createObjectStore("data", {
+        upgrade(e, n, r, s) {
+          let i;
+          if (n < 5)
+            try {
+              e.deleteObjectStore("data");
+            } catch {
+            }
+          e.objectStoreNames.contains("data") ? i = s.objectStore("data") : i = e.createObjectStore("data", {
             keyPath: "_id",
             autoIncrement: !0
-          }), s && !s.indexNames.contains("_createdAt") && s.createIndex("_createdAt", "_createdAt"), s && !s.indexNames.contains("_pk") && s.createIndex("_pk", "_pk", {
+          }), i && !i.indexNames.contains("_createdAt") && i.createIndex("_createdAt", "_createdAt"), i && !i.indexNames.contains("_pk") && i.createIndex("_pk", "_pk", {
             unique: !0
           });
         }
       });
     });
   }
-  _dbAddElem(e, n, r) {
+  _dbGetElem(e, n) {
+    return f(this, void 0, void 0, function* () {
+      if (this.persistent && this.db)
+        return n || (n = this.db.transaction("data", "readonly")), yield n.store.index("_pk").get(e);
+      throw new Error("DB doesnt exist");
+    });
+  }
+  getElem(e) {
+    return f(this, void 0, void 0, function* () {
+      if (this.persistent && this.db)
+        try {
+          return yield this._dbGetElem(e);
+        } catch (n) {
+          console.error(n);
+        }
+      else
+        this.data.get(e);
+    });
+  }
+  _dbSetElem(e, n, r = !1, s) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db) {
-        r || (r = this.db.transaction("data", "readwrite"));
-        const i = r.store;
-        (yield i.index("_pk").get(e)) || (yield i.put(Object.assign({ _pk: e, _createdAt: /* @__PURE__ */ new Date() }, n)));
+        s || (s = this.db.transaction("data", "readwrite"));
+        const i = s.store, o = yield i.index("_pk").get(e);
+        o ? r && (yield i.put(Object.assign(Object.assign({}, o), n))) : yield i.put(Object.assign({ _pk: e, _createdAt: /* @__PURE__ */ new Date() }, n));
       } else
         throw new Error("DB doesnt exist");
     });
   }
-  addElem(e, n) {
+  addElem(e, n, r = !1) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db)
         try {
-          yield this._dbAddElem(e, n);
-        } catch (r) {
-          console.error(r);
+          yield this._dbSetElem(e, n, r);
+        } catch (s) {
+          console.error(s);
         }
       else
         this.data.set(e, n);
     });
   }
-  addElems(e) {
+  addElems(e, n = !1) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db) {
-        const n = [], r = this.db.transaction("data", "readwrite");
-        e.forEach(([i, s]) => {
-          n.push(this._dbAddElem(i, s, r));
-        }), n.push(r.done), yield Promise.all(n);
+        const r = [], s = this.db.transaction("data", "readwrite");
+        e.forEach(([i, o]) => {
+          r.push(this._dbSetElem(i, o, n, s));
+        }), r.push(s.done), yield Promise.all(r);
       } else
-        e.forEach(([n, r]) => {
-          this.addElem(n, r);
+        e.forEach(([r, s]) => {
+          this.addElem(r, s);
         });
     });
   }
@@ -287,8 +311,8 @@ class ue {
       if (this.persistent && this.db) {
         const e = /* @__PURE__ */ new Map(), n = yield this.db.getAll("data");
         return n && n.forEach((r) => {
-          const { _id: i } = r, s = de(r, ["_id"]);
-          e.set(i, s);
+          const { _id: s } = r, i = de(r, ["_id"]);
+          e.set(s, i);
         }), e;
       } else
         return this.data;
@@ -300,8 +324,8 @@ class ue {
       return e.push(this.headers), (yield this.getAll()).forEach((r) => {
         try {
           e.push(this.itemToRow(r));
-        } catch (i) {
-          console.error(i);
+        } catch (s) {
+          console.error(s);
         }
       }), e;
     });
@@ -356,7 +380,7 @@ function fe() {
 class he extends ue {
   constructor() {
     super(...arguments);
-    k(this, "name", "fb-scrape-storage");
+    A(this, "name", "fb-scrape-storage");
   }
   get headers() {
     return [
@@ -394,8 +418,8 @@ async function B() {
 function pe() {
   const t = fe(), e = F();
   e.appendChild(y("Download ")), e.appendChild(y("0", "fb-group-scraper-number-tracker")), e.appendChild(y(" members")), e.addEventListener("click", async function() {
-    const r = (/* @__PURE__ */ new Date()).toISOString(), i = await g.toCsvData();
-    Z(`groupMemberExport-${r}.csv`, i);
+    const r = (/* @__PURE__ */ new Date()).toISOString(), s = await g.toCsvData();
+    Z(`groupMemberExport-${r}.csv`, s);
   }), t.appendChild(e);
   const n = F(!0);
   n.appendChild(y("Reset")), n.addEventListener("click", async function() {
@@ -405,9 +429,9 @@ function pe() {
   }, 1e3);
 }
 function ye(t) {
-  var s, o, l, a, u, d;
+  var i, o, l, a, u, d;
   let e;
-  if ((s = t == null ? void 0 : t.data) != null && s.group)
+  if ((i = t == null ? void 0 : t.data) != null && i.group)
     e = t.data.group;
   else if (((l = (o = t == null ? void 0 : t.data) == null ? void 0 : o.node) == null ? void 0 : l.__typename) === "Group")
     e = t.data.node;
@@ -423,9 +447,9 @@ function ye(t) {
   else
     return;
   const r = n.map((c) => {
-    var A, P, T, O;
-    const b = c.node.__isEntity === "GroupUserInvite" ? c.node.invitee_profile : c.node;
-    if (!b)
+    var P, O, T, k;
+    const m = c.node.__isEntity === "GroupUserInvite" ? c.node.invitee_profile : c.node;
+    if (!m)
       return null;
     const {
       id: J,
@@ -434,7 +458,7 @@ function ye(t) {
       url: z,
       profile_picture: w,
       __isProfile: $
-    } = b, q = ((A = c == null ? void 0 : c.join_status_text) == null ? void 0 : A.text) || ((T = (P = c == null ? void 0 : c.membership) == null ? void 0 : P.join_status_text) == null ? void 0 : T.text), H = (O = b.group_membership) == null ? void 0 : O.associated_group.id;
+    } = m, q = ((P = c == null ? void 0 : c.join_status_text) == null ? void 0 : P.text) || ((T = (O = c == null ? void 0 : c.membership) == null ? void 0 : O.join_status_text) == null ? void 0 : T.text), H = (k = m.group_membership) == null ? void 0 : k.associated_group.id;
     return {
       profileId: J,
       fullName: U,
@@ -445,10 +469,10 @@ function ye(t) {
       groupJoiningText: q || "",
       profileType: $
     };
-  }), i = [];
+  }), s = [];
   r.forEach((c) => {
-    c && i.push([c.profileId, c]);
-  }), g.addElems(i).then(() => {
+    c && s.push([c.profileId, c]);
+  }), g.addElems(s).then(() => {
     B();
   });
 }
@@ -463,10 +487,10 @@ function ge(t) {
       console.error("Fail to parse API response", n);
       return;
     }
-    for (let i = 0; i < r.length; i++) {
-      const s = r[i];
+    for (let s = 0; s < r.length; s++) {
+      const i = r[s];
       try {
-        e.push(JSON.parse(s));
+        e.push(JSON.parse(i));
       } catch {
         console.error("Fail to parse API response", n);
       }
@@ -475,7 +499,7 @@ function ge(t) {
   for (let n = 0; n < e.length; n++)
     ye(e[n]);
 }
-function me() {
+function be() {
   pe();
   const t = "/api/graphql/";
   let e = XMLHttpRequest.prototype.send;
@@ -485,4 +509,4 @@ function me() {
     }, !1), e.apply(this, arguments);
   };
 }
-me();
+be();

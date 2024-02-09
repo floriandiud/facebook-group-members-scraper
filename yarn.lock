@@ -199,9 +199,9 @@
   dependencies:
     undici-types "~5.26.4"
 
-"browser-scraping-utils@git+https://github.com/floriandiud/browser-scraping-utils#0.0.30":
-  version "0.0.30"
-  resolved "git+https://github.com/floriandiud/browser-scraping-utils#38e079f45e68bfb281a9663ee9fc455707e82f51"
+"browser-scraping-utils@git+https://github.com/floriandiud/browser-scraping-utils#0.0.33":
+  version "0.0.33"
+  resolved "git+https://github.com/floriandiud/browser-scraping-utils#4e091afa86ff981dffc9265fd685c6ba0f753a86"
   dependencies:
     idb "^8.0.0"
     typescript "^5.3.2"
