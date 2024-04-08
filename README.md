@@ -100,7 +100,7 @@ But we can use the name, the company name, or the LinkedIn Profile URL to find a
 - **Can I extract members from different groups at one time?**
     - Yes. The exported CSV contains a "Group Id" attribute. Load members from one Facebook group, go to another group page (without reloading your page), load members, and click "Download". Members extracted from both groups will be in a single CSV file with different "Group Id" values.
 - **What is the "Reset" button?**
-    - The profiles are stored in a cache in your browser. The cache is kept if your browser restart the page (intentionally or after a crash). When you copy/paste the script, it loads the previous profiles from the cache. The "Reset" button clear the cache.
+    - The profiles are stored in a cache in your browser. The cache is kept if your browser restarts the page (intentionally or after a crash). When you copy/paste the script, it loads the previous profiles from the cache. The "Reset" button clears the cache.
 - **Is it free?**
     - The script is free and open-source. You can also clean and parse the data to get only members with a Company name with a free account on [Datablist](https://www.datablist.com). To perform a [LinkedIn Profile lookup](https://www.datablist.com/enrichments/linkedin-finder-from-name) or to [find an email address](https://www.datablist.com/enrichments/email-finder) you have to subscribe to a paid account on [Datablist](https://www.datablist.com). Those enrichments rely on external APIs. 
 
@@ -112,5 +112,8 @@ yarn build
 ```
 
 
-
 The generated script is located in `dist/main.min.js`.
+
+## Other scrapers
+
+- [Scrape Instagram followers, following users, post authors](https://github.com/floriandiud/instagram-users-scraper)
