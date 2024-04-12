@@ -1,28 +1,28 @@
-var X = Object.defineProperty;
-var Y = (t, e, n) => e in t ? X(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
-var A = (t, e, n) => (Y(t, typeof e != "symbol" ? e + "" : e, n), n);
-function Z(t, e) {
+var G = Object.defineProperty;
+var Q = (t, e, n) => e in t ? G(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
+var M = (t, e, n) => (Q(t, typeof e != "symbol" ? e + "" : e, n), n);
+function ee(t, e) {
   for (var n = function(a) {
-    for (var u = "", d = 0; d < a.length; d++) {
-      var c = a[d] === null || typeof a[d] > "u" ? "" : a[d].toString();
-      a[d] instanceof Date && (c = a[d].toLocaleString());
-      var p = c.replace(/"/g, '""');
-      p.search(/("|,|\n)/g) >= 0 && (p = '"' + p + '"'), d > 0 && (u += ","), u += p;
+    for (var c = "", d = 0; d < a.length; d++) {
+      var u = a[d] === null || typeof a[d] > "u" ? "" : a[d].toString();
+      a[d] instanceof Date && (u = a[d].toLocaleString());
+      var p = u.replace(/"/g, '""');
+      p.search(/("|,|\n)/g) >= 0 && (p = '"' + p + '"'), d > 0 && (c += ","), c += p;
     }
-    return u + `
+    return c + `
 `;
-  }, r = "", s = 0; s < e.length; s++)
-    r += n(e[s]);
-  var i = new Blob([r], { type: "text/csv;charset=utf-8;" }), o = document.createElement("a");
-  if (o.download !== void 0) {
-    var l = URL.createObjectURL(i);
-    o.setAttribute("href", l), o.setAttribute("download", t), document.body.appendChild(o), o.click(), document.body.removeChild(o);
+  }, r = "", i = 0; i < e.length; i++)
+    r += n(e[i]);
+  var o = new Blob([r], { type: "text/csv;charset=utf-8;" }), s = document.createElement("a");
+  if (s.download !== void 0) {
+    var l = URL.createObjectURL(o);
+    s.setAttribute("href", l), s.setAttribute("download", t), document.body.appendChild(s), s.click(), document.body.removeChild(s);
   }
 }
-const I = (t, e) => e.some((n) => t instanceof n);
-let M, j;
-function N() {
-  return M || (M = [
+const _ = (t, e) => e.some((n) => t instanceof n);
+let P, j;
+function te() {
+  return P || (P = [
     IDBDatabase,
     IDBObjectStore,
     IDBIndex,
@@ -30,47 +30,47 @@ function N() {
     IDBTransaction
   ]);
 }
-function G() {
+function ne() {
   return j || (j = [
     IDBCursor.prototype.advance,
     IDBCursor.prototype.continue,
     IDBCursor.prototype.continuePrimaryKey
   ]);
 }
-const _ = /* @__PURE__ */ new WeakMap(), x = /* @__PURE__ */ new WeakMap(), b = /* @__PURE__ */ new WeakMap();
-function Q(t) {
+const D = /* @__PURE__ */ new WeakMap(), E = /* @__PURE__ */ new WeakMap(), b = /* @__PURE__ */ new WeakMap();
+function re(t) {
   const e = new Promise((n, r) => {
-    const s = () => {
-      t.removeEventListener("success", i), t.removeEventListener("error", o);
-    }, i = () => {
-      n(h(t.result)), s();
+    const i = () => {
+      t.removeEventListener("success", o), t.removeEventListener("error", s);
     }, o = () => {
-      r(t.error), s();
+      n(h(t.result)), i();
+    }, s = () => {
+      r(t.error), i();
     };
-    t.addEventListener("success", i), t.addEventListener("error", o);
+    t.addEventListener("success", o), t.addEventListener("error", s);
   });
   return b.set(e, t), e;
 }
-function ee(t) {
-  if (_.has(t))
+function ie(t) {
+  if (D.has(t))
     return;
   const e = new Promise((n, r) => {
-    const s = () => {
-      t.removeEventListener("complete", i), t.removeEventListener("error", o), t.removeEventListener("abort", o);
-    }, i = () => {
-      n(), s();
+    const i = () => {
+      t.removeEventListener("complete", o), t.removeEventListener("error", s), t.removeEventListener("abort", s);
     }, o = () => {
-      r(t.error || new DOMException("AbortError", "AbortError")), s();
+      n(), i();
+    }, s = () => {
+      r(t.error || new DOMException("AbortError", "AbortError")), i();
     };
-    t.addEventListener("complete", i), t.addEventListener("error", o), t.addEventListener("abort", o);
+    t.addEventListener("complete", o), t.addEventListener("error", s), t.addEventListener("abort", s);
   });
-  _.set(t, e);
+  D.set(t, e);
 }
-let D = {
+let C = {
   get(t, e, n) {
     if (t instanceof IDBTransaction) {
       if (e === "done")
-        return _.get(t);
+        return D.get(t);
       if (e === "store")
         return n.objectStoreNames[1] ? void 0 : n.objectStore(n.objectStoreNames[0]);
     }
@@ -84,135 +84,135 @@ let D = {
   }
 };
 function K(t) {
-  D = t(D);
+  C = t(C);
 }
-function te(t) {
-  return G().includes(t) ? function(...e) {
+function oe(t) {
+  return ne().includes(t) ? function(...e) {
     return t.apply(S(this), e), h(this.request);
   } : function(...e) {
     return h(t.apply(S(this), e));
   };
 }
-function ne(t) {
-  return typeof t == "function" ? te(t) : (t instanceof IDBTransaction && ee(t), I(t, N()) ? new Proxy(t, D) : t);
+function se(t) {
+  return typeof t == "function" ? oe(t) : (t instanceof IDBTransaction && ie(t), _(t, te()) ? new Proxy(t, C) : t);
 }
 function h(t) {
   if (t instanceof IDBRequest)
-    return Q(t);
-  if (x.has(t))
-    return x.get(t);
-  const e = ne(t);
-  return e !== t && (x.set(t, e), b.set(e, t)), e;
+    return re(t);
+  if (E.has(t))
+    return E.get(t);
+  const e = se(t);
+  return e !== t && (E.set(t, e), b.set(e, t)), e;
 }
 const S = (t) => b.get(t);
-function re(t, e, { blocked: n, upgrade: r, blocking: s, terminated: i } = {}) {
-  const o = indexedDB.open(t, e), l = h(o);
-  return r && o.addEventListener("upgradeneeded", (a) => {
-    r(h(o.result), a.oldVersion, a.newVersion, h(o.transaction), a);
-  }), n && o.addEventListener("blocked", (a) => n(
+function ae(t, e, { blocked: n, upgrade: r, blocking: i, terminated: o } = {}) {
+  const s = indexedDB.open(t, e), l = h(s);
+  return r && s.addEventListener("upgradeneeded", (a) => {
+    r(h(s.result), a.oldVersion, a.newVersion, h(s.transaction), a);
+  }), n && s.addEventListener("blocked", (a) => n(
     // Casting due to https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/1405
     a.oldVersion,
     a.newVersion,
     a
   )), l.then((a) => {
-    i && a.addEventListener("close", () => i()), s && a.addEventListener("versionchange", (u) => s(u.oldVersion, u.newVersion, u));
+    o && a.addEventListener("close", () => o()), i && a.addEventListener("versionchange", (c) => i(c.oldVersion, c.newVersion, c));
   }).catch(() => {
   }), l;
 }
-const se = ["get", "getKey", "getAll", "getAllKeys", "count"], ie = ["put", "add", "delete", "clear"], E = /* @__PURE__ */ new Map();
-function L(t, e) {
+const ce = ["get", "getKey", "getAll", "getAllKeys", "count"], de = ["put", "add", "delete", "clear"], I = /* @__PURE__ */ new Map();
+function R(t, e) {
   if (!(t instanceof IDBDatabase && !(e in t) && typeof e == "string"))
     return;
-  if (E.get(e))
-    return E.get(e);
-  const n = e.replace(/FromIndex$/, ""), r = e !== n, s = ie.includes(n);
+  if (I.get(e))
+    return I.get(e);
+  const n = e.replace(/FromIndex$/, ""), r = e !== n, i = de.includes(n);
   if (
     // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
-    !(n in (r ? IDBIndex : IDBObjectStore).prototype) || !(s || se.includes(n))
+    !(n in (r ? IDBIndex : IDBObjectStore).prototype) || !(i || ce.includes(n))
   )
     return;
-  const i = async function(o, ...l) {
-    const a = this.transaction(o, s ? "readwrite" : "readonly");
-    let u = a.store;
-    return r && (u = u.index(l.shift())), (await Promise.all([
-      u[n](...l),
-      s && a.done
+  const o = async function(s, ...l) {
+    const a = this.transaction(s, i ? "readwrite" : "readonly");
+    let c = a.store;
+    return r && (c = c.index(l.shift())), (await Promise.all([
+      c[n](...l),
+      i && a.done
     ]))[0];
   };
-  return E.set(e, i), i;
+  return I.set(e, o), o;
 }
 K((t) => ({
   ...t,
-  get: (e, n, r) => L(e, n) || t.get(e, n, r),
-  has: (e, n) => !!L(e, n) || t.has(e, n)
+  get: (e, n, r) => R(e, n) || t.get(e, n, r),
+  has: (e, n) => !!R(e, n) || t.has(e, n)
 }));
-const oe = ["continue", "continuePrimaryKey", "advance"], R = {}, C = /* @__PURE__ */ new WeakMap(), W = /* @__PURE__ */ new WeakMap(), ae = {
+const le = ["continue", "continuePrimaryKey", "advance"], V = {}, B = /* @__PURE__ */ new WeakMap(), U = /* @__PURE__ */ new WeakMap(), ue = {
   get(t, e) {
-    if (!oe.includes(e))
+    if (!le.includes(e))
       return t[e];
-    let n = R[e];
-    return n || (n = R[e] = function(...r) {
-      C.set(this, W.get(this)[e](...r));
+    let n = V[e];
+    return n || (n = V[e] = function(...r) {
+      B.set(this, U.get(this)[e](...r));
     }), n;
   }
 };
-async function* ce(...t) {
+async function* fe(...t) {
   let e = this;
   if (e instanceof IDBCursor || (e = await e.openCursor(...t)), !e)
     return;
   e = e;
-  const n = new Proxy(e, ae);
-  for (W.set(n, e), b.set(n, S(e)); e; )
-    yield n, e = await (C.get(n) || e.continue()), C.delete(n);
+  const n = new Proxy(e, ue);
+  for (U.set(n, e), b.set(n, S(e)); e; )
+    yield n, e = await (B.get(n) || e.continue()), B.delete(n);
 }
-function V(t, e) {
-  return e === Symbol.asyncIterator && I(t, [IDBIndex, IDBObjectStore, IDBCursor]) || e === "iterate" && I(t, [IDBIndex, IDBObjectStore]);
+function F(t, e) {
+  return e === Symbol.asyncIterator && _(t, [IDBIndex, IDBObjectStore, IDBCursor]) || e === "iterate" && _(t, [IDBIndex, IDBObjectStore]);
 }
 K((t) => ({
   ...t,
   get(e, n, r) {
-    return V(e, n) ? ce : t.get(e, n, r);
+    return F(e, n) ? fe : t.get(e, n, r);
   },
   has(e, n) {
-    return V(e, n) || t.has(e, n);
+    return F(e, n) || t.has(e, n);
   }
 }));
 var f = function(t, e, n, r) {
-  function s(i) {
-    return i instanceof n ? i : new n(function(o) {
-      o(i);
+  function i(o) {
+    return o instanceof n ? o : new n(function(s) {
+      s(o);
     });
   }
-  return new (n || (n = Promise))(function(i, o) {
+  return new (n || (n = Promise))(function(o, s) {
     function l(d) {
       try {
-        u(r.next(d));
-      } catch (c) {
-        o(c);
+        c(r.next(d));
+      } catch (u) {
+        s(u);
       }
     }
     function a(d) {
       try {
-        u(r.throw(d));
-      } catch (c) {
-        o(c);
+        c(r.throw(d));
+      } catch (u) {
+        s(u);
       }
     }
-    function u(d) {
-      d.done ? i(d.value) : s(d.value).then(l, a);
+    function c(d) {
+      d.done ? o(d.value) : i(d.value).then(l, a);
     }
-    u((r = r.apply(t, e || [])).next());
+    c((r = r.apply(t, e || [])).next());
   });
-}, de = function(t, e) {
+}, he = function(t, e) {
   var n = {};
   for (var r in t)
     Object.prototype.hasOwnProperty.call(t, r) && e.indexOf(r) < 0 && (n[r] = t[r]);
   if (t != null && typeof Object.getOwnPropertySymbols == "function")
-    for (var s = 0, r = Object.getOwnPropertySymbols(t); s < r.length; s++)
-      e.indexOf(r[s]) < 0 && Object.prototype.propertyIsEnumerable.call(t, r[s]) && (n[r[s]] = t[r[s]]);
+    for (var i = 0, r = Object.getOwnPropertySymbols(t); i < r.length; i++)
+      e.indexOf(r[i]) < 0 && Object.prototype.propertyIsEnumerable.call(t, r[i]) && (n[r[i]] = t[r[i]]);
   return n;
 };
-class ue {
+class pe {
   constructor(e) {
     this.name = "scrape-storage", this.persistent = !0, this.data = /* @__PURE__ */ new Map(), e != null && e.name && (this.name = e.name), e != null && e.persistent && (this.persistent = e.persistent), this.initDB().then(() => {
     }).catch(() => {
@@ -224,18 +224,18 @@ class ue {
   }
   initDB() {
     return f(this, void 0, void 0, function* () {
-      this.db = yield re(this.storageKey, 5, {
-        upgrade(e, n, r, s) {
-          let i;
+      this.db = yield ae(this.storageKey, 6, {
+        upgrade(e, n, r, i) {
+          let o;
           if (n < 5)
             try {
               e.deleteObjectStore("data");
             } catch {
             }
-          e.objectStoreNames.contains("data") ? i = s.objectStore("data") : i = e.createObjectStore("data", {
+          e.objectStoreNames.contains("data") ? o = i.objectStore("data") : o = e.createObjectStore("data", {
             keyPath: "_id",
             autoIncrement: !0
-          }), i && !i.indexNames.contains("_createdAt") && i.createIndex("_createdAt", "_createdAt"), i && !i.indexNames.contains("_pk") && i.createIndex("_pk", "_pk", {
+          }), o && !o.indexNames.contains("_createdAt") && o.createIndex("_createdAt", "_createdAt"), o && !o.indexNames.contains("_groupId") && o.createIndex("_groupId", "_groupId"), o && !o.indexNames.contains("_pk") && o.createIndex("_pk", "_pk", {
             unique: !0
           });
         }
@@ -261,39 +261,66 @@ class ue {
         this.data.get(e);
     });
   }
-  _dbSetElem(e, n, r = !1, s) {
+  _dbSetElem(e, n, r = !1, i, o) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db) {
-        s || (s = this.db.transaction("data", "readwrite"));
-        const i = s.store, o = yield i.index("_pk").get(e);
-        o ? r && (yield i.put(Object.assign(Object.assign({}, o), n))) : yield i.put(Object.assign({ _pk: e, _createdAt: /* @__PURE__ */ new Date() }, n));
+        let s = !1;
+        o || (o = this.db.transaction("data", "readwrite"));
+        const l = o.store, a = yield l.index("_pk").get(e);
+        if (a)
+          r && (yield l.put(Object.assign(Object.assign({}, a), n)), s = !0);
+        else {
+          const c = Object.assign({ _pk: e, _createdAt: /* @__PURE__ */ new Date() }, n);
+          i && (c._groupId = i), yield l.put(c), s = !0;
+        }
+        return s;
       } else
         throw new Error("DB doesnt exist");
     });
   }
-  addElem(e, n, r = !1) {
+  addElem(e, n, r = !1, i) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db)
         try {
-          yield this._dbSetElem(e, n, r);
-        } catch (s) {
-          console.error(s);
+          return yield this._dbSetElem(e, n, r, i);
+        } catch (o) {
+          console.error(o);
         }
       else
         this.data.set(e, n);
+      return !0;
     });
   }
-  addElems(e, n = !1) {
+  addElems(e, n = !1, r) {
     return f(this, void 0, void 0, function* () {
       if (this.persistent && this.db) {
-        const r = [], s = this.db.transaction("data", "readwrite");
-        e.forEach(([i, o]) => {
-          r.push(this._dbSetElem(i, o, n, s));
-        }), r.push(s.done), yield Promise.all(r);
+        const i = [], o = this.db.transaction("data", "readwrite"), s = [];
+        if (e.forEach(([l, a]) => {
+          s.indexOf(l) === -1 && (s.push(l), i.push(this._dbSetElem(l, a, n, r, o)));
+        }), i.length > 0) {
+          i.push(o.done);
+          const l = yield Promise.all(i);
+          let a = 0;
+          return l.forEach((c) => {
+            typeof c == "boolean" && c && (a += 1);
+          }), a;
+        }
+        return 0;
       } else
-        e.forEach(([r, s]) => {
-          this.addElem(r, s);
-        });
+        return e.forEach(([i, o]) => {
+          this.addElem(i, o);
+        }), e.length;
+    });
+  }
+  deleteFromGroupId(e) {
+    return f(this, void 0, void 0, function* () {
+      if (this.persistent && this.db) {
+        let n = 0, i = yield this.db.transaction("data", "readwrite").store.index("_groupId").openCursor(IDBKeyRange.only(e));
+        for (; i; )
+          i.delete(), i = yield i.continue(), n += 1;
+        return n;
+      } else
+        throw new Error("Not Implemented Error");
     });
   }
   clear() {
@@ -311,8 +338,8 @@ class ue {
       if (this.persistent && this.db) {
         const e = /* @__PURE__ */ new Map(), n = yield this.db.getAll("data");
         return n && n.forEach((r) => {
-          const { _id: s } = r, i = de(r, ["_id"]);
-          e.set(s, i);
+          const { _id: i } = r, o = he(r, ["_id"]);
+          e.set(i, o);
         }), e;
       } else
         return this.data;
@@ -324,63 +351,117 @@ class ue {
       return e.push(this.headers), (yield this.getAll()).forEach((r) => {
         try {
           e.push(this.itemToRow(r));
-        } catch (s) {
-          console.error(s);
+        } catch (i) {
+          console.error(i);
         }
       }), e;
     });
   }
 }
-function y(t, e) {
-  const n = document.createElement("span");
-  return e && n.setAttribute("id", e), n.textContent = t, n;
+const ye = [
+  "display: block;",
+  "padding: 0px 4px;",
+  "cursor: pointer;",
+  "text-align: center;"
+];
+function W(t) {
+  const e = document.createElement("div"), n = [...ye];
+  return t && n.push("flex-grow: 1;"), e.setAttribute("style", n.join("")), e;
 }
-function F(t) {
-  const e = document.createElement("div"), n = [
-    "display: block;",
-    "padding: 0px 4px;"
-  ];
-  return t && n.push("border-left: 1px solid #2e2e2e;", "margin-left: 4px;"), e.setAttribute("style", n.join("")), e;
+const ge = [
+  "margin-left: 4px;",
+  "margin-right: 4px;",
+  "border-left: 1px solid #2e2e2e;"
+];
+function X() {
+  const t = document.createElement("div");
+  return t.innerHTML = "&nbsp;", t.setAttribute("style", ge.join("")), t;
 }
-function le() {
-  const t = document.createElement("div"), e = [
-    "position: absolute;",
-    "bottom: 30px;",
-    "right: 130px;",
-    "color: #2e2e2e;",
-    "background: #EEE;",
-    "border-radius: 12px;",
-    "padding: 0px 12px;",
-    "cursor: pointer;",
-    "font-weight:600;",
-    "font-size:15px;",
-    "display: flex;",
-    "pointer-events: auto;",
-    "border: 1px solid #000;",
-    "height: 36px;",
-    "align-items: center;",
-    "justify-content: center;"
-  ];
-  return t.setAttribute("style", e.join("")), t;
+function g(t, e) {
+  const n = e || {};
+  let r;
+  const i = document.createElement("span");
+  if (n.bold) {
+    const o = document.createElement("strong");
+    i.append(o), r = o;
+  } else
+    r = i;
+  return r.textContent = t, n.idAttribute && r.setAttribute("id", n.idAttribute), i;
 }
-function fe() {
-  const t = document.createElement("div"), e = [
-    "position: fixed;",
-    "top: 0;",
-    "left: 0;",
-    "z-index: 10;",
-    "width: 100%;",
-    "height: 100%;",
-    "pointer-events: none;"
-  ];
-  t.setAttribute("style", e.join(""));
-  const n = le();
-  return t.appendChild(n), document.body.appendChild(t), n;
+const me = [
+  "position: fixed;",
+  "top: 0;",
+  "left: 0;",
+  "z-index: 10000;",
+  "width: 100%;",
+  "height: 100%;",
+  "pointer-events: none;"
+], be = [
+  "position: absolute;",
+  "bottom: 30px;",
+  "right: 30px;",
+  "width: auto;",
+  "pointer-events: auto;"
+], we = [
+  "align-items: center;",
+  "appearance: none;",
+  "background-color: #EEE;",
+  "border-radius: 4px;",
+  "border-width: 0;",
+  "box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;",
+  "box-sizing: border-box;",
+  "color: #36395A;",
+  "display: flex;",
+  "font-family: monospace;",
+  "height: 38px;",
+  "justify-content: space-between;",
+  "line-height: 1;",
+  "list-style: none;",
+  "overflow: hidden;",
+  "padding-left: 16px;",
+  "padding-right: 16px;",
+  "position: relative;",
+  "text-align: left;",
+  "text-decoration: none;",
+  "user-select: none;",
+  "white-space: nowrap;",
+  "font-size: 18px;"
+];
+class ve {
+  constructor() {
+    this.ctas = [], this.canva = document.createElement("div"), this.canva.setAttribute("style", me.join("")), this.inner = document.createElement("div"), this.inner.setAttribute("style", be.join("")), this.canva.appendChild(this.inner), this.history = document.createElement("div"), this.inner.appendChild(this.history), this.container = document.createElement("div"), this.container.setAttribute("style", we.join("")), this.inner.appendChild(this.container);
+  }
+  makeItDraggable() {
+    let e = 0, n = 0, r = 0, i = 0;
+    const o = (d) => {
+      r = d.clientX - e, i = d.clientY - n, this.inner.style.right = window.innerWidth - r - this.inner.offsetWidth + "px", this.inner.style.bottom = window.innerHeight - i - this.inner.offsetHeight + "px";
+    }, s = (d) => {
+      d.preventDefault(), e = d.clientX - this.inner.offsetLeft, n = d.clientY - this.inner.offsetTop, window.addEventListener("mousemove", o, !1);
+    }, l = () => {
+      window.removeEventListener("mousemove", o, !1);
+    };
+    this.inner.addEventListener("mousedown", s, !1), window.addEventListener("mouseup", l, !1);
+    const a = '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="18px" width="18px" xmlns="http://www.w3.org/2000/svg"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>', c = document.createElement("div");
+    c.style.cursor = "move", c.innerHTML = a, this.addCta(X()), this.addCta(c);
+  }
+  render() {
+    document.body.appendChild(this.canva);
+  }
+  // CTA
+  addCta(e, n) {
+    typeof n > "u" ? this.ctas.push(e) : this.ctas.splice(n, 0, e), this.container.innerHTML = "", this.ctas.forEach((r) => {
+      this.container.appendChild(r);
+    });
+  }
 }
-class he extends ue {
+var H;
+(function(t) {
+  t.ADD = "add", t.LOG = "log";
+})(H || (H = {}));
+class xe extends pe {
   constructor() {
     super(...arguments);
-    A(this, "name", "fb-scrape-storage");
+    M(this, "name", "fb-scrape-storage");
   }
   get headers() {
     return [
@@ -407,76 +488,84 @@ class he extends ue {
     ];
   }
 }
-const g = new he();
-async function B() {
-  const t = document.getElementById("fb-group-scraper-number-tracker");
+const m = new xe(), J = "fb-group-scraper-number-tracker", Ee = "groupMemberExport";
+async function A() {
+  const t = document.getElementById(J);
   if (t) {
-    const e = await g.getCount();
+    const e = await m.getCount();
     t.textContent = e.toString();
   }
 }
-function pe() {
-  const t = fe(), e = F();
-  e.appendChild(y("Download ")), e.appendChild(y("0", "fb-group-scraper-number-tracker")), e.appendChild(y(" members")), e.addEventListener("click", async function() {
-    const r = (/* @__PURE__ */ new Date()).toISOString(), s = await g.toCsvData();
-    Z(`groupMemberExport-${r}.csv`, s);
-  }), t.appendChild(e);
-  const n = F(!0);
-  n.appendChild(y("Reset")), n.addEventListener("click", async function() {
-    await g.clear(), await B();
-  }), t.appendChild(n), window.setTimeout(() => {
-    B();
+const y = new ve();
+function Ie() {
+  const t = W();
+  t.appendChild(g("Download ")), t.appendChild(g("0", {
+    bold: !0,
+    idAttribute: J
+  })), t.appendChild(g(" users")), t.addEventListener("click", async function() {
+    const n = (/* @__PURE__ */ new Date()).toISOString(), r = await m.toCsvData();
+    try {
+      ee(`${Ee}-${n}.csv`, r);
+    } catch (i) {
+      console.error("Error while generating export"), console.log(i.stack);
+    }
+  }), y.addCta(t), y.addCta(X());
+  const e = W();
+  e.appendChild(g("Reset")), e.addEventListener("click", async function() {
+    await m.clear(), await A();
+  }), y.addCta(e), y.makeItDraggable(), y.render(), window.setTimeout(() => {
+    A();
   }, 1e3);
 }
-function ye(t) {
-  var i, o, l, a, u, d;
+function _e(t) {
+  var o, s, l, a, c, d;
   let e;
-  if ((i = t == null ? void 0 : t.data) != null && i.group)
+  if ((o = t == null ? void 0 : t.data) != null && o.group)
     e = t.data.group;
-  else if (((l = (o = t == null ? void 0 : t.data) == null ? void 0 : o.node) == null ? void 0 : l.__typename) === "Group")
+  else if (((l = (s = t == null ? void 0 : t.data) == null ? void 0 : s.node) == null ? void 0 : l.__typename) === "Group")
     e = t.data.node;
   else
     return;
   let n;
   if ((a = e == null ? void 0 : e.new_members) != null && a.edges)
     n = e.new_members.edges;
-  else if ((u = e == null ? void 0 : e.new_forum_members) != null && u.edges)
+  else if ((c = e == null ? void 0 : e.new_forum_members) != null && c.edges)
     n = e.new_forum_members.edges;
   else if ((d = e == null ? void 0 : e.search_results) != null && d.edges)
     n = e.search_results.edges;
   else
     return;
-  const r = n.map((c) => {
-    var P, O, T, k;
-    const m = c.node.__isEntity === "GroupUserInvite" ? c.node.invitee_profile : c.node;
-    if (!m)
+  const r = n.map((u) => {
+    var k, T, L, O;
+    const w = u.node.__isEntity === "GroupUserInvite" ? u.node.invitee_profile : u.node;
+    if (!w)
       return null;
     const {
-      id: J,
-      name: U,
+      id: z,
+      name: Y,
       bio_text: v,
-      url: z,
-      profile_picture: w,
-      __isProfile: $
-    } = m, q = ((P = c == null ? void 0 : c.join_status_text) == null ? void 0 : P.text) || ((T = (O = c == null ? void 0 : c.membership) == null ? void 0 : O.join_status_text) == null ? void 0 : T.text), H = (k = m.group_membership) == null ? void 0 : k.associated_group.id;
+      url: $,
+      profile_picture: x,
+      __isProfile: q
+    } = w, N = ((k = u == null ? void 0 : u.join_status_text) == null ? void 0 : k.text) || ((L = (T = u == null ? void 0 : u.membership) == null ? void 0 : T.join_status_text) == null ? void 0 : L.text), Z = (O = w.group_membership) == null ? void 0 : O.associated_group.id;
     return {
-      profileId: J,
-      fullName: U,
-      profileLink: z,
+      profileId: z,
+      fullName: Y,
+      profileLink: $,
       bio: (v == null ? void 0 : v.text) || "",
-      imageSrc: (w == null ? void 0 : w.uri) || "",
-      groupId: H,
-      groupJoiningText: q || "",
-      profileType: $
+      imageSrc: (x == null ? void 0 : x.uri) || "",
+      groupId: Z,
+      groupJoiningText: N || "",
+      profileType: q
     };
-  }), s = [];
-  r.forEach((c) => {
-    c && s.push([c.profileId, c]);
-  }), g.addElems(s).then(() => {
-    B();
+  }), i = [];
+  r.forEach((u) => {
+    u && i.push([u.profileId, u]);
+  }), m.addElems(i).then(() => {
+    A();
   });
 }
-function ge(t) {
+function De(t) {
   let e = [];
   try {
     e.push(JSON.parse(t));
@@ -487,26 +576,26 @@ function ge(t) {
       console.error("Fail to parse API response", n);
       return;
     }
-    for (let s = 0; s < r.length; s++) {
-      const i = r[s];
+    for (let i = 0; i < r.length; i++) {
+      const o = r[i];
       try {
-        e.push(JSON.parse(i));
+        e.push(JSON.parse(o));
       } catch {
         console.error("Fail to parse API response", n);
       }
     }
   }
   for (let n = 0; n < e.length; n++)
-    ye(e[n]);
+    _e(e[n]);
 }
-function be() {
-  pe();
+function Ce() {
+  Ie();
   const t = "/api/graphql/";
   let e = XMLHttpRequest.prototype.send;
   XMLHttpRequest.prototype.send = function() {
     this.addEventListener("readystatechange", function() {
-      this.responseURL.includes(t) && this.readyState === 4 && ge(this.responseText);
+      this.responseURL.includes(t) && this.readyState === 4 && De(this.responseText);
     }, !1), e.apply(this, arguments);
   };
 }
-be();
+Ce();

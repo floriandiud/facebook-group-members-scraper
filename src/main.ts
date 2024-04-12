@@ -1,4 +1,11 @@
-import {exportToCsv, ListStorage, initCanva, createBtn, createTextSpan} from 'browser-scraping-utils';
+import {
+    exportToCsv,
+    ListStorage,
+    UIContainer,
+    createCta,
+    createSpacer,
+    createTextSpan
+} from 'browser-scraping-utils';
 
 interface FBMember {
     profileId: string
@@ -41,41 +48,63 @@ class FBStorage extends ListStorage<FBMember> {
 
 
 const memberListStore = new FBStorage();
+const counterId = 'fb-group-scraper-number-tracker';
+const exportName = 'groupMemberExport';
+
 
 async function updateConter(){
     // Update member tracker counter
-    const tracker = document.getElementById('fb-group-scraper-number-tracker')
+    const tracker = document.getElementById(counterId)
     if(tracker){
         const countValue = await memberListStore.getCount();
         tracker.textContent = countValue.toString()
     }
 }
 
+const uiWidget = new UIContainer();
+
 function buildCTABtn(){
-    const btnContainer = initCanva();
     
     // Button Download
-    const btnDownload = createBtn();
+    const btnDownload = createCta();
     btnDownload.appendChild(createTextSpan('Download\u00A0'))
-    btnDownload.appendChild(createTextSpan('0', 'fb-group-scraper-number-tracker'))
-    btnDownload.appendChild(createTextSpan('\u00A0members'))
+    btnDownload.appendChild(createTextSpan('0', {
+        bold: true,
+        idAttribute: counterId
+    }))
+    btnDownload.appendChild(createTextSpan('\u00A0users'))
 
     btnDownload.addEventListener('click', async function() {
         const timestamp = new Date().toISOString()
         const data = await memberListStore.toCsvData()
-        exportToCsv(`groupMemberExport-${timestamp}.csv`, data)
+        try{
+            exportToCsv(`${exportName}-${timestamp}.csv`, data)
+        }catch(err){
+            console.error('Error while generating export');
+            // @ts-ignore
+            console.log(err.stack)
+        }
     });
 
-    btnContainer.appendChild(btnDownload);
+    uiWidget.addCta(btnDownload)
+
+    // Spacer
+    uiWidget.addCta(createSpacer())
 
     // Button Reinit
-    const btnReinit = createBtn(true);
+    const btnReinit = createCta();
     btnReinit.appendChild(createTextSpan('Reset'))
     btnReinit.addEventListener('click', async function() {
         await memberListStore.clear();
         await updateConter();
     });
-    btnContainer.appendChild(btnReinit);
+    uiWidget.addCta(btnReinit);
+
+    // Draggable
+    uiWidget.makeItDraggable();
+
+    // Render
+    uiWidget.render()
 
     // Initial
     window.setTimeout(()=>{
