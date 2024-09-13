@@ -536,7 +536,7 @@ function _e(t) {
   else
     return;
   const r = n.map((u) => {
-    var k, T, L, O;
+    var k, O, T, L;
     const w = u.node.__isEntity === "GroupUserInvite" ? u.node.invitee_profile : u.node;
     if (!w)
       return null;
@@ -547,7 +547,7 @@ function _e(t) {
       url: $,
       profile_picture: x,
       __isProfile: q
-    } = w, N = ((k = u == null ? void 0 : u.join_status_text) == null ? void 0 : k.text) || ((L = (T = u == null ? void 0 : u.membership) == null ? void 0 : T.join_status_text) == null ? void 0 : L.text), Z = (O = w.group_membership) == null ? void 0 : O.associated_group.id;
+    } = w, N = ((k = u == null ? void 0 : u.join_status_text) == null ? void 0 : k.text) || ((T = (O = u == null ? void 0 : u.membership) == null ? void 0 : O.join_status_text) == null ? void 0 : T.text), Z = (L = w.group_membership) == null ? void 0 : L.associated_group.id;
     return {
       profileId: z,
       fullName: Y,
@@ -591,8 +591,8 @@ function De(t) {
 function Ce() {
   Ie();
   const t = "/api/graphql/";
-  let e = XMLHttpRequest.prototype.send;
-  XMLHttpRequest.prototype.send = function() {
+  let e = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function() {
     this.addEventListener("readystatechange", function() {
       this.responseURL.includes(t) && this.readyState === 4 && De(this.responseText);
     }, !1), e.apply(this, arguments);

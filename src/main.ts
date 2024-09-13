@@ -222,16 +222,17 @@ function main(): void {
 
     // Watch API calls to find GraphQL responses to parse
     const matchingUrl = '/api/graphql/';
-    let send = XMLHttpRequest.prototype.send;
-    XMLHttpRequest.prototype.send = function() {
+    let originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
         this.addEventListener('readystatechange', function() {
             if (this.responseURL.includes(matchingUrl) && this.readyState === 4) {
                 parseResponse(this.responseText);
             }
         }, false);
         // @ts-ignore
-        send.apply(this, arguments);
+        originalOpen.apply(this, arguments);
     };
 }
 
 main();
+
