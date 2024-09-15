@@ -9,6 +9,8 @@ Script to scrape Facebook group members and export them into a CSV file. This Fa
  1. Copy Paste the following code into the console. It will add a "Download 0 members" button. **Important: Copy/Paste before moving to the "People/Members" tab**
  1. Click on the "People" tab of the group page
  1. Scroll to load new members that will get scraped by the script. The button counter increases with new members scraped.
+    - If you have a lot of members, you can use this script to load them all
+    - `setInterval(() => window.scrollTo(0, document.body.scrollHeight), 100);`
  1. Once done, click on the "Download X members" button to download the generated CSV file
  1. The profiles are kept in a cache until you click the "Reset" button. Thanks to this cache, the extracted profiles are still available if your browser "crashes"
 
